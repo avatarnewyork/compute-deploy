@@ -1,5 +1,49 @@
 compute-deploy
 ==============
 
-Deploy &amp; Bootstrap using Apache Libcloud
+compute-deploy is an Apache Libcloud wrapper used to deploy & bootstrap a cloud compute server.  You can create or download a shell script to bootstrap your server with.  See 
+
+## Requirements
+
+* [Python 2.7](http://www.python.org)
+* [Apache Libcloud](https://libcloud.readthedocs.org)
+
+## Support
+
+Currently, this version supports the following providers:
+
+* Rackspace
+
+## Usage
+
+```
+
+--size [SERVER_SIZE]
+--name [SERVER_NAME]
+--flavor [SERVER_OS]
+--region [PROVIDER_REGION]
+--bootstrap [BOOTSTRAP_FILE.sh]
+```
+
+## Example
+
+Deploy a 512MB server running CentOS 5.10 at Rackspace Chicago and bootstrap the server with [salt-bootstrap](https://github.com/saltstack/salt-bootstrap)
+`compute-deploy --size=512 --name=saltbox1 --flavor='CentOS 5.10' --region=ord --bootstrap='salt-bootstrap/bootstrap-salt.sh'`
+
+## Bootstrap Plugins
+
+A bootstrap plugin is any shell script you want the server to initialize with.  To use a bootstrap plugin, download or create a shell file within the compute-deploy directory and call it with the `--boostrap` flag.
+
+### Available Bootstrap Plugins
+
+* [salt-bootstrap](https://github.com/saltstack/salt-bootstrap)
+* [puppet-bootstrap](https://github.com/avatarnewyork/puppet-bootstrap)
+
+### Using a bootstrap plugin submodule
+
+1. cd to the `compute-deploy` dir
+2. add the submodule (ex: `git submodule add git@github.com:saltstack/salt-bootstrap.git`)
+3. run: `git submodule init`
+4. run: `git submodule update`
+3. use the shell file provided by the plugin (ex: `--bootstrap='salt-bootstrap/bootstrap-salt.sh'`)
 
