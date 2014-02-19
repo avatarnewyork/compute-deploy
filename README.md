@@ -7,8 +7,8 @@ compute-deploy is an Apache Libcloud wrapper used to deploy & bootstrap a cloud 
 
 * [Python 2.7](http://www.python.org)
 * [Apache Libcloud](https://libcloud.readthedocs.org) - `pip install apache-libcloud`
-* [simplejson] - `pip install simplejson`
-* [paramiko] - `pip install paramiko`
+* [simplejson](https://github.com/simplejson/simplejson) - `pip install simplejson`
+* [paramiko](https://github.com/paramiko/paramiko) - `pip install paramiko`
 
 ## Support
 
