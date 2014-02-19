@@ -6,7 +6,9 @@ compute-deploy is an Apache Libcloud wrapper used to deploy & bootstrap a cloud 
 ## Requirements
 
 * [Python 2.7](http://www.python.org)
-* [Apache Libcloud](https://libcloud.readthedocs.org)
+* [Apache Libcloud](https://libcloud.readthedocs.org) - `pip install apache-libcloud`
+* [simplejson] - `pip install simplejson`
+* [paramiko] - `pip install paramiko`
 
 ## Support
 
@@ -23,12 +25,21 @@ Currently, this version supports the following providers:
 --flavor [SERVER_OS]
 --region [PROVIDER_REGION]
 --bootstrap [BOOTSTRAP_FILE.sh]
+--bootstrapargs [COMMA_SEPARATED_ARG_STRING]
+--customfile [CUSTOMFILE_PATH]
 ```
 
-## Example
+## Examples
 
 Deploy a 512MB server running CentOS 5.10 at Rackspace Chicago and bootstrap the server with [salt-bootstrap](https://github.com/saltstack/salt-bootstrap)
-`compute-deploy --size=512 --name=saltbox1 --flavor='CentOS 5.10' --region=ord --bootstrap='salt-bootstrap/bootstrap-salt.sh'`
+`./compute-deploy.py --size=512 --name=saltbox1 --flavor='CentOS 5.10' --region=ord --bootstrap='salt-bootstrap/bootstrap-salt.sh'`
+
+Deploy a 512MB server running CentOS 6.5 at Rackspace Chicago and bootstrap the server with [puppet-bootstrap](https://github.com/avatarnewyork/puppet-bootstrap) with the puppetmaster IP being 192.168.1.1 and the puppet environment being production
+`./compute-deploy.py --size=512 --name=puppetclient1 --flavor='CentOS 6.5' --region=ord --bootstrap='puppet-bootstrap/puppet-bootstrap.py' --bootstrapargs='192.168.1.1,production'`
+
+Deploy a 512MB server running CentOS 6.5 at Rackspace Chicago and bootstrap the server with [puppet-bootstrap](https://github.com/avatarnewyork/puppet-bootstrap) with the puppetmaster IP being 192.168.1.1 and the puppet environment being production and create / mount 1GB swap disk
+`./compute-deploy.py --size=512 --name=puppetclient1 --flavor='CentOS 6.5' --region=ord --bootstrap='puppet-bootstrap/puppet-bootstrap.py' --bootstrapargs='192.168.1.1,production,swap.sh' --customfile='swap.sh'`
+
 
 ## Bootstrap Plugins
 
@@ -46,4 +57,6 @@ A bootstrap plugin is any shell script you want the server to initialize with.  
 3. run: `git submodule init`
 4. run: `git submodule update`
 3. use the shell file provided by the plugin (ex: `--bootstrap='salt-bootstrap/bootstrap-salt.sh'`)
+
+
 
