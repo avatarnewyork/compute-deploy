@@ -58,5 +58,16 @@ A bootstrap plugin is any shell script you want the server to initialize with.  
 4. run: `git submodule update`
 3. use the shell file provided by the plugin (ex: `--bootstrap='salt-bootstrap/bootstrap-salt.sh'`)
 
+## Troubleshooting 
 
+### RuntimeError: No CA Certificates were found
+
+This is probably the most common error you may run into when first trying out the program.  This is apache-libcloud complaining that it can't find a valid certificate bundle.  **See https://libcloud.readthedocs.org/en/latest/other/ssl-certificate-validation.html** for more information.  The easiest workaround I found was as follows:
+
+1. run this gist: https://gist.github.com/1stvamp/2158128 (this downloads and installs the ca-bundle.crt under `/usr/share/curl`)
+2. set the `SSL_CERT_FILE` parameter before execute as follows:
+
+```bash
+SSL_CERT_FILE=/usr/share/curl/ca-bundle.crt python2.7 ./compute-deploy.py --size=1024 ...
+```
 
