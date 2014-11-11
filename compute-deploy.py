@@ -10,6 +10,8 @@ import re
 
 import sys, getopt
 
+libcloud.security.VERIFY_SSL_CERT = False
+
 def main(argv):
     servername=''
     serversize=''
