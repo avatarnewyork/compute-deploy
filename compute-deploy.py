@@ -7,6 +7,7 @@ import libcloud.compute.types
 from libcloud.compute.deployment import MultiStepDeployment, ScriptDeployment, SSHKeyDeployment, FileDeployment
 import os.path
 import re
+import pprint
 
 import sys, getopt
 
@@ -55,8 +56,10 @@ def main(argv):
     driver = RackspaceProvider(creds["user"], creds["key"], region=serverregion)
 
     # Choose size and flavor
+
     images = driver.list_images() # Get a list of images
     sizes = driver.list_sizes() # Get a list of server sizes
+    #pprint.pprint(sizes);
     size = [s for s in sizes if s.ram == int(serversize)][0] 
     image = [i for i in images if i.name == serverflavor][0] 
 
@@ -75,7 +78,7 @@ def main(argv):
      
     # MultiDeploy with keys and bootstrap file
     multideploy = MultiStepDeployment(deployitems)
-    node = driver.deploy_node(name=servername, image=image, size=size, deploy=multideploy)
+    node = driver.deploy_node(timeout=1000, ssh_timeout=60, name=servername, image=image, size=size, deploy=multideploy)
 
     # Print the Public IP after the node is built 
     print node.public_ips[0]
